@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Murshad! ✨ Shanzay Ahmed 🎂</title>
+  <meta name="description" content="A 3D interactive animated birthday celebration website dedicated to Shanzay Ahmed (Murshad) on August 16th!" />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Outfit:wght@300;400;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700&family=Reenie+Beanie&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <!-- 3D Canvas Background -->
+  <div id="canvas-container"></div>
+
+
+  <!-- Main HUD Overlay -->
+  <main class="ui-overlay">
+    
+    <!-- Typewriter Greeting -->
+    <div class="typewriter-wrap">
+      <span id="typewriter-text" class="typewriter-text"></span><span class="typewriter-cursor">|</span>
+    </div>
+
+    <!-- Hero Header -->
+    <header class="hero-header">
+      <div class="badge-pill pulse-glow">
+        <span class="star-sparkle">✦</span> AUGUST 16 SPECIAL • DEDICATED TO SHANZAY AHMED <span class="star-sparkle">✦</span>
+      </div>
+      
+      <h1 class="main-title">
+        Happy Birthday, <br />
+        <span class="gradient-text glow-text">Murshad!</span> 👑
+      </h1>
+      
+      <p class="subtitle">
+        To the brilliant, multi-talented <strong class="highlight-name">Shanzay Ahmed</strong> — wishing you an extraordinary year filled with happiness, success, and zero bugs! ✨
+      </p>
+
+      <!-- Real-time Countdown Timer -->
+      <div class="countdown-wrapper glass-card">
+        <div class="countdown-header">
+          <span class="timer-icon">⏳</span>
+          <span id="countdown-label">Countdown to August 16th</span>
+        </div>
+        <div class="countdown-grid">
+          <div class="time-block">
+            <span id="days" class="time-num">00</span>
+            <span class="time-label">DAYS</span>
+          </div>
+          <div class="time-colon">:</div>
+          <div class="time-block">
+            <span id="hours" class="time-num">00</span>
+            <span class="time-label">HOURS</span>
+          </div>
+          <div class="time-colon">:</div>
+          <div class="time-block">
+            <span id="minutes" class="time-num">00</span>
+            <span class="time-label">MINUTES</span>
+          </div>
+          <div class="time-colon">:</div>
+          <div class="time-block">
+            <span id="seconds" class="time-num">00</span>
+            <span class="time-label">SECONDS</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Interactive 3D Stage Controls -->
+    <section class="stage-controls">
+      <div class="action-buttons-group">
+        <button id="blow-candles-btn" class="glow-btn primary-btn">
+          <span class="btn-icon">🕯️</span> Blow Out Candles & Wish!
+        </button>
+        <button id="open-gift-btn" class="glow-btn secondary-btn">
+          <span class="btn-icon">🎁</span> Open Murshad's Secret Box
+        </button>
+        <button id="fireworks-btn" class="glow-btn accent-btn">
+          <span class="btn-icon">🎆</span> Launch Cosmic Fireworks
+        </button>
+        <button id="release-lantern-btn" class="glow-btn primary-btn">
+          <span class="btn-icon">🏮</span> Release Sky Lantern
+        </button>
+      </div>
+    </section>
+
+    <!-- Heartfelt Appreciation Section -->
+    <section class="wishes-section">
+      <h2 class="section-title">✨ Why You Are Truly <span>Special</span></h2>
+      <p class="section-subtitle">Dedicated with respect & admiration to Shanzay Ahmed ("Murshad")</p>
+
+      <div class="cards-grid">
+        <div class="glass-card feature-card">
+          <div class="card-icon">🧠</div>
+          <h3>Brilliance & Sharp Logic</h3>
+          <p>Your problem-solving mindset, quick intellect, and sharp logic always stand out and inspire everyone around you.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="card-icon">🌟</div>
+          <h3>Inspiring Energy</h3>
+          <p>You bring a genuine spark of warmth, dedication, and positive vibes to every project and conversation.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="card-icon">👑</div>
+          <h3>The "Murshad" Wisdom</h3>
+          <p>Calling you <strong>"Murshad"</strong> is a genuine tribute to your mature mindset, guiding insights, and awesome character.</p>
+        </div>
+
+        <div class="glass-card feature-card">
+          <div class="card-icon">🚀</div>
+          <h3>Limitless Future</h3>
+          <p>On this 16th of August, wishing you a milestone year filled with peak achievements, joy, and endless success!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A Message From The Heart -->
+    <section class="promise-section">
+      <div class="promise-card glass-card">
+        <div class="promise-icon">💛</div>
+        <div class="promise-text-block">
+          <p class="promise-line-eng">"No matter how far apart we are, know that I'm always rooting for you."</p>
+          <p class="promise-sub">
+            You have everything it takes to reach the top, Shanzay. Your talent, your passion, and your spirit — they are truly one of a kind. This birthday marks the beginning of your most incredible chapter yet. Keep shining. 🌟
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Popup for Secret Gift Unboxing -->
+  <div id="gift-modal" class="modal-overlay hidden">
+    <div class="modal-card glass-card">
+      <button id="close-modal" class="close-btn">&times;</button>
+      <div class="modal-header">
+        <span class="modal-badge">🎁 SECRET UNBOXING</span>
+        <h2>Happy Birthday, Murshad Ji! 👑🎂</h2>
+      </div>
+      <div class="modal-body">
+        <p class="letter-greeting">Dear Shanzay Ahmed,</p>
+        <p class="letter-text">
+          Calling you <strong>"Murshad"</strong> isn't just a fun title — it's a mark of genuine respect for your brilliant mind, amazing personality, and wonderful spirit! 🌟
+        </p>
+        <p class="letter-text">
+          On this 16th of August, I wish you a year ahead filled with unforgettable moments, massive career breakthroughs, good health, and boundless happiness. May every single goal you set be achieved effortlessly!
+        </p>
+        <div class="letter-promise-box">
+          <span class="letter-promise-urdu">💛 A Promise For You</span>
+          <span class="letter-promise-note">No matter where life takes you, I'll always be in your corner. You are never alone — and I mean that wholeheartedly.</span>
+        </div>
+        <div class="letter-signature">
+          <span>Stay Awesome & Stay Blessed! 🎉</span><br/>
+          <strong class="sig-name">— Always Here For You</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-celebrate-btn" class="glow-btn primary-btn">
+          🎉 Celebrate & Pop Confetti!
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Birthday Auto-Popup (shown on August 16) -->
+  <div id="birthday-popup" class="modal-overlay hidden">
+    <div class="birthday-popup-card glass-card">
+      <div class="birthday-popup-burst">🎆🎂🎆</div>
+      <h2 class="birthday-popup-title gradient-text">TODAY IS YOUR DAY!</h2>
+      <p class="birthday-popup-name">Murshad 👑 — Shanzay Ahmed</p>
+      <p class="birthday-popup-msg">
+        August 16 is finally here! 🎉 This is YOUR moment. Your day. Wishing you the most magical, joyful birthday ever. You deserve every bit of happiness coming your way!
+      </p>
+      <button id="birthday-popup-close" class="glow-btn primary-btn">
+        🎊 Let's Celebrate!
+      </button>
+    </div>
+  </div>
+
+  <!-- Cake Slice Celebration Overlay (shown after blowing candles) -->
+  <div id="cake-cut-overlay" class="modal-overlay hidden">
+    <div class="cake-cut-card glass-card">
+      <div class="cake-cut-emoji">🎂✂️</div>
+      <h2 class="cake-cut-title">Cake Cut! 🎉</h2>
+      <p class="cake-cut-msg">
+        Congratulations, <strong>Murshad!</strong> The candles are out and the cake is yours! May every wish you made while blowing those candles come true. 💛
+      </p>
+      <button id="cake-cut-close" class="glow-btn primary-btn">💛 Thank You!</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
