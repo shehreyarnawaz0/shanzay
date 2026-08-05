@@ -48,8 +48,13 @@ export class BirthdayThreeScene {
     );
     this.camera.position.set(0, 3.5, 9);
 
-    // Optimized WebGL Renderer (1.5 DPR max, no heavy shadow passes for 60FPS smooth performance)
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    // Optimized WebGL Renderer (120 FPS High-Refresh Rate Mode, mediump precision shader execution)
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+      precision: "mediump"
+    });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -626,14 +631,16 @@ export class BirthdayThreeScene {
   animate() {
     requestAnimationFrame(() => this.animate());
 
+    const delta = Math.min(clock.getDelta(), 0.1);
     const time = clock.getElapsedTime();
+    const timeStep = delta * 60; // Normalize movement to 120 FPS / 60 FPS refresh rates
 
     // Smooth Mouse Camera Parallax
     this.targetRotationY = this.mouseX * 0.5;
     this.targetRotationX = -this.mouseY * 0.3;
 
-    this.scene.rotation.y += (this.targetRotationY - this.scene.rotation.y) * 0.05;
-    this.scene.rotation.x += (this.targetRotationX - this.scene.rotation.x) * 0.05;
+    this.scene.rotation.y += (this.targetRotationY - this.scene.rotation.y) * (0.05 * timeStep);
+    this.scene.rotation.x += (this.targetRotationX - this.scene.rotation.x) * (0.05 * timeStep);
 
     // Rotate particle cloud gently
     if (this.particleCloud) {
@@ -657,8 +664,8 @@ export class BirthdayThreeScene {
 
     // Sky Lanterns ascending animation
     this.skyLanterns.forEach((l) => {
-      l.position.y += l.userData.speedY;
-      l.position.x += Math.sin(time + l.userData.offset) * 0.003;
+      l.position.y += l.userData.speedY * timeStep;
+      l.position.x += Math.sin(time + l.userData.offset) * 0.003 * timeStep;
       if (l.position.y > 7.5) {
         l.position.y = -2.5;
         l.position.x = (Math.random() - 0.5) * 14;
@@ -668,9 +675,9 @@ export class BirthdayThreeScene {
     // Cursor Magic Dust Particles animation
     for (let i = this.cursorParticles.length - 1; i >= 0; i--) {
       const p = this.cursorParticles[i];
-      p.life -= p.decay;
-      p.mesh.position.y += 0.005;
-      p.mesh.scale.multiplyScalar(0.96);
+      p.life -= p.decay * timeStep;
+      p.mesh.position.y += 0.005 * timeStep;
+      p.mesh.scale.multiplyScalar(Math.pow(0.96, timeStep));
       p.mat.opacity = Math.max(0, p.life);
 
       if (p.life <= 0) {
