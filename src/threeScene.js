@@ -38,7 +38,7 @@ export class BirthdayThreeScene {
 
   init() {
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0x070913, 0.035);
+    this.scene.fog = new THREE.FogExp2(0x070913, 0.03);
 
     this.camera = new THREE.PerspectiveCamera(
       50,
@@ -48,13 +48,12 @@ export class BirthdayThreeScene {
     );
     this.camera.position.set(0, 3.5, 9);
 
-    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // Optimized WebGL Renderer (1.5 DPR max, no heavy shadow passes for 60FPS smooth performance)
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.2;
+    this.renderer.toneMappingExposure = 1.15;
 
     this.container.appendChild(this.renderer.domElement);
 
@@ -63,30 +62,28 @@ export class BirthdayThreeScene {
     this.mouseY = 0;
     this.targetRotationY = 0;
     this.targetRotationX = 0;
+
+    // Shared geometry for cursor particles (prevents memory leaks/lag)
+    this.cursorParticleGeo = new THREE.SphereGeometry(0.04, 6, 6);
   }
 
   createLighting() {
     // Ambient Light
-    const ambientLight = new THREE.AmbientLight(0x2a1b4e, 1.8);
+    const ambientLight = new THREE.AmbientLight(0x3a2b5e, 2.0);
     this.scene.add(ambientLight);
 
-    // Main Warm Gold Spotlight
-    this.spotLight = new THREE.SpotLight(0xffd700, 4);
-    this.spotLight.position.set(5, 12, 6);
-    this.spotLight.angle = Math.PI / 4;
-    this.spotLight.penumbra = 0.8;
-    this.spotLight.castShadow = true;
-    this.spotLight.shadow.mapSize.width = 2048;
-    this.spotLight.shadow.mapSize.height = 2048;
-    this.scene.add(this.spotLight);
+    // Main Warm Gold Directional Light (Fast & Lightweight)
+    const dirLight = new THREE.DirectionalLight(0xffd700, 3.5);
+    dirLight.position.set(4, 10, 5);
+    this.scene.add(dirLight);
 
-    // Purple & Cyan Rim Accent Lights
-    const rimLight1 = new THREE.PointLight(0xff2a8d, 3, 15);
-    rimLight1.position.set(-6, 4, -4);
+    // Purple & Cyan Accent Point Lights (limited distance for speed)
+    const rimLight1 = new THREE.PointLight(0xff2a8d, 2.5, 12);
+    rimLight1.position.set(-5, 4, -3);
     this.scene.add(rimLight1);
 
-    const rimLight2 = new THREE.PointLight(0x00f0ff, 3, 15);
-    rimLight2.position.set(6, 4, -4);
+    const rimLight2 = new THREE.PointLight(0x00f0ff, 2.5, 12);
+    rimLight2.position.set(5, 4, -3);
     this.scene.add(rimLight2);
   }
 
@@ -431,7 +428,7 @@ export class BirthdayThreeScene {
   }
 
   spawnCursorParticle(ndcX, ndcY) {
-    if (this.cursorParticles.length > 35) return;
+    if (this.cursorParticles.length > 20) return;
 
     const vector = new THREE.Vector3(ndcX, ndcY, 0.5);
     vector.unproject(this.camera);
@@ -439,14 +436,13 @@ export class BirthdayThreeScene {
     const distance = 5.5;
     const pos = this.camera.position.clone().add(dir.multiplyScalar(distance));
 
-    const geo = new THREE.SphereGeometry(0.04 + Math.random() * 0.03, 8, 8);
     const palette = [0xffd700, 0x00f0ff, 0xff2a8d, 0xffffff, 0x9d4edd];
     const mat = new THREE.MeshBasicMaterial({
       color: palette[Math.floor(Math.random() * palette.length)],
       transparent: true,
       opacity: 0.9
     });
-    const mesh = new THREE.Mesh(geo, mat);
+    const mesh = new THREE.Mesh(this.cursorParticleGeo, mat);
     mesh.position.copy(pos);
     this.scene.add(mesh);
 
@@ -454,7 +450,7 @@ export class BirthdayThreeScene {
       mesh,
       mat,
       life: 1.0,
-      decay: 0.03 + Math.random() * 0.02
+      decay: 0.05 + Math.random() * 0.03
     });
   }
 
@@ -679,7 +675,6 @@ export class BirthdayThreeScene {
 
       if (p.life <= 0) {
         this.scene.remove(p.mesh);
-        p.mesh.geometry.dispose();
         p.mat.dispose();
         this.cursorParticles.splice(i, 1);
       }
