@@ -22,6 +22,10 @@ export class BirthdayThreeScene {
     this.onGiftClick = null;
     this.onCakeClick = null;
 
+    // Mobile Device Performance Profiling
+    this.isMobile = (window.innerWidth < 768) || ('ontouchstart' in window) || /Android|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+    this.lastParticleSpawn = 0;
+
     this.init();
     this.createLighting();
     this.createParticles();
@@ -48,15 +52,15 @@ export class BirthdayThreeScene {
     );
     this.camera.position.set(0, 3.5, 9);
 
-    // Optimized WebGL Renderer (120 FPS High-Refresh Rate Mode, mediump precision shader execution)
+    // Highly Optimized WebGL Renderer for Mobile & Desktop
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: !this.isMobile, // Disable MSAA on mobile GPUs to prevent thermal throttling
       alpha: true,
       powerPreference: "high-performance",
       precision: "mediump"
     });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    this.renderer.setPixelRatio(this.isMobile ? 1.0 : Math.min(window.devicePixelRatio, 1.5));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.15;
 
@@ -93,8 +97,8 @@ export class BirthdayThreeScene {
   }
 
   createParticles() {
-    // Starry Galaxy Particle Cloud
-    const particleCount = 1200;
+    // Starry Galaxy Particle Cloud (Optimized for Mobile)
+    const particleCount = this.isMobile ? 350 : 1200;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -433,7 +437,12 @@ export class BirthdayThreeScene {
   }
 
   spawnCursorParticle(ndcX, ndcY) {
-    if (this.cursorParticles.length > 20) return;
+    if (this.isMobile) return; // Completely disable interactive particles on mobile to prevent garbage collection stalls
+    const now = performance.now();
+    if (now - this.lastParticleSpawn < 80) return; // Throttle particle creation
+    this.lastParticleSpawn = now;
+
+    if (this.cursorParticles.length > 12) return;
 
     const vector = new THREE.Vector3(ndcX, ndcY, 0.5);
     vector.unproject(this.camera);
