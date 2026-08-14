@@ -926,9 +926,23 @@ html, body {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
   width: 100%;
+}
+
+.polaroid-card:nth-child(1),
+.polaroid-card:nth-child(2),
+.polaroid-card:nth-child(3) {
+  grid-column: span 2;
+}
+
+.polaroid-card:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.polaroid-card:nth-child(5) {
+  grid-column: 4 / span 2;
 }
 
 .polaroid-card {
@@ -1104,10 +1118,22 @@ html, body {
   text-align: center;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 768px) {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+
+  .polaroid-card:nth-child(1),
+  .polaroid-card:nth-child(2),
+  .polaroid-card:nth-child(3),
+  .polaroid-card:nth-child(4),
+  .polaroid-card:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .polaroid-card:nth-child(5) {
+    grid-column: 1 / span 2;
   }
 
   .lightbox-nav-btn {
@@ -1117,9 +1143,13 @@ html, body {
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 480px) {
   .gallery-grid {
     grid-template-columns: 1fr;
+  }
+
+  .polaroid-card:nth-child(5) {
+    grid-column: span 1;
   }
 }
 
