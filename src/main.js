@@ -194,6 +194,47 @@ document.addEventListener('DOMContentLoaded', () => {
   modalCelebrateBtn.addEventListener('click', launchFireworks);
   fireworksBtn.addEventListener('click', launchFireworks);
 
+  // ===== FEATURE 6: PHOTO MEMORIES LIGHTBOX MODAL =====
+  const polaroids = Array.from(document.querySelectorAll('.polaroid-card'));
+  const lightbox = document.getElementById('photo-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+  const lightboxPrev = document.getElementById('lightbox-prev');
+  const lightboxNext = document.getElementById('lightbox-next');
+  let currentPhotoIndex = 0;
+
+  const showPhoto = (index) => {
+    if (polaroids.length === 0) return;
+    currentPhotoIndex = (index + polaroids.length) % polaroids.length;
+    const target = polaroids[currentPhotoIndex];
+    lightboxImg.src = target.dataset.src;
+    lightboxCaption.textContent = target.dataset.caption;
+  };
+
+  polaroids.forEach((card, idx) => {
+    card.addEventListener('click', () => {
+      showPhoto(idx);
+      lightbox?.classList.remove('hidden');
+      audioSynth.playPopFanfare();
+      launchConfetti();
+    });
+  });
+
+  lightboxClose?.addEventListener('click', () => lightbox?.classList.add('hidden'));
+  lightboxPrev?.addEventListener('click', () => showPhoto(currentPhotoIndex - 1));
+  lightboxNext?.addEventListener('click', () => showPhoto(currentPhotoIndex + 1));
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) lightbox.classList.add('hidden');
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (!lightbox || lightbox.classList.contains('hidden')) return;
+    if (e.key === 'ArrowLeft') showPhoto(currentPhotoIndex - 1);
+    if (e.key === 'ArrowRight') showPhoto(currentPhotoIndex + 1);
+    if (e.key === 'Escape') lightbox.classList.add('hidden');
+  });
+
   // 6. Wish Form (if present)
   const wishForm = document.getElementById('wish-form');
   if (wishForm) {
@@ -214,3 +255,4 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+

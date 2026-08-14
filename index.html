@@ -121,6 +121,74 @@
       </div>
     </section>
 
+    <!-- Photo Memories Gallery Section -->
+    <section class="gallery-section">
+      <h2 class="section-title">📸 Precious Moments • <span>Murshad's Gallery</span></h2>
+      <p class="section-subtitle">A collection of special captures celebrating Shanzay Ahmed 💫</p>
+
+      <div class="gallery-grid">
+        <div class="polaroid-card glass-card" data-index="0" data-src="/pics/shanzay-1.jpg" data-caption="Unforgettable Spark 🌟 — Shanzay Ahmed">
+          <div class="polaroid-img-wrap">
+            <img src="/pics/shanzay-1.jpg" alt="Shanzay Ahmed Photo 1" loading="lazy" />
+            <div class="polaroid-overlay">
+              <span class="zoom-icon">🔍 View Picture</span>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <span class="caption-sparkle">✦</span> Unforgettable Spark 🌟
+          </div>
+        </div>
+
+        <div class="polaroid-card glass-card" data-index="1" data-src="/pics/shanzay-2.jpg" data-caption="The True Murshad 👑 — Shanzay Ahmed">
+          <div class="polaroid-img-wrap">
+            <img src="/pics/shanzay-2.jpg" alt="Shanzay Ahmed Photo 2" loading="lazy" />
+            <div class="polaroid-overlay">
+              <span class="zoom-icon">🔍 View Picture</span>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <span class="caption-sparkle">✦</span> The True Murshad 👑
+          </div>
+        </div>
+
+        <div class="polaroid-card glass-card" data-index="2" data-src="/pics/shanzay-3.jpg" data-caption="Radiant Smile & Warmth ✨ — Shanzay Ahmed">
+          <div class="polaroid-img-wrap">
+            <img src="/pics/shanzay-3.jpg" alt="Shanzay Ahmed Photo 3" loading="lazy" />
+            <div class="polaroid-overlay">
+              <span class="zoom-icon">🔍 View Picture</span>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <span class="caption-sparkle">✦</span> Radiant Warmth ✨
+          </div>
+        </div>
+
+        <div class="polaroid-card glass-card" data-index="3" data-src="/pics/shanzay-4.jpg" data-caption="Grace & Elegance 💫 — Shanzay Ahmed">
+          <div class="polaroid-img-wrap">
+            <img src="/pics/shanzay-4.jpg" alt="Shanzay Ahmed Photo 4" loading="lazy" />
+            <div class="polaroid-overlay">
+              <span class="zoom-icon">🔍 View Picture</span>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <span class="caption-sparkle">✦</span> Grace & Elegance 💫
+          </div>
+        </div>
+
+        <div class="polaroid-card glass-card" data-index="4" data-src="/pics/shanzay-5.jpg" data-caption="A Vision of Excellence 🚀 — Shanzay Ahmed">
+          <div class="polaroid-img-wrap">
+            <img src="/pics/shanzay-5.jpg" alt="Shanzay Ahmed Photo 5" loading="lazy" />
+            <div class="polaroid-overlay">
+              <span class="zoom-icon">🔍 View Picture</span>
+            </div>
+          </div>
+          <div class="polaroid-caption">
+            <span class="caption-sparkle">✦</span> Vision of Excellence 🚀
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- A Message From The Heart -->
     <section class="promise-section">
       <div class="promise-card glass-card">
@@ -134,6 +202,21 @@
       </div>
     </section>
   </main>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="photo-lightbox" class="modal-overlay hidden">
+    <div class="lightbox-card glass-card">
+      <button id="lightbox-close" class="close-btn">&times;</button>
+      <div class="lightbox-body">
+        <button id="lightbox-prev" class="lightbox-nav-btn">&larr;</button>
+        <div class="lightbox-image-container">
+          <img id="lightbox-img" src="" alt="Enlarged photo memory" />
+          <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+        <button id="lightbox-next" class="lightbox-nav-btn">&rarr;</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal Popup for Secret Gift Unboxing -->
   <div id="gift-modal" class="modal-overlay hidden">
